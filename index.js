@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var fastify_plugin_1 = require("fastify-plugin");
 var mqtt_1 = require("mqtt");
-require("./fastify");
 function decorateFastifyInstance(fastify, client, next) {
     fastify.addHook('onClose', function () {
         client.end();
@@ -17,10 +16,12 @@ function decorateFastifyInstance(fastify, client, next) {
     next();
 }
 var fastifyMqttPlugin = function (fastify, opts, next) {
-    var client = mqtt_1.default.connect(opts.url, opts.options);
-    var isDebug = opts.isDebug;
+    var client = mqtt_1.default.connect(opts.mqttUrl, opts.mqttOptions);
+    var isDebug = opts.mqttIsDebug;
+    fastify.log.info('Connecting to mqtt broker at %s', opts.mqttUrl);
     client.on("connect", function () {
         decorateFastifyInstance(fastify, client, next);
+        fastify.log.info('Connected to mqtt broker at %s', opts.mqttUrl);
     });
     client.on('reconnect', function () {
         fastify.log.info('Reconnecting to mqtt broker at %s', opts.url);
@@ -43,7 +44,7 @@ var fastifyMqttPlugin = function (fastify, opts, next) {
         next(err);
     });
 };
-var fastifyMqtt = (0, fastify_plugin_1.default)(decorateFastifyInstance, {
+var fastifyMqtt = (0, fastify_plugin_1.default)(fastifyMqttPlugin, {
     fastify: '4.x',
     name: 'fastifyMqtt'
 });

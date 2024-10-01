@@ -60,7 +60,7 @@ test('pub/sub unauthenticated', t => {
       t.equal(message.toString(), testString)
     })
 
-    fastify.mqtt.subscribe(testTopic, testString, {}, (err) => t.error(err))
+    fastify.mqtt.subscribe(testTopic, {}, (err) => t.error(err))
     fastify.mqtt.publish(testTopic, testString, {}, (err) => t.error(err))
   })
 })
@@ -87,7 +87,7 @@ test('pub/sub authenticated', t => {
       t.equal(message.toString(), testString)
     })
 
-    fastify.mqtt.subscribe(testTopic, testString, {}, (err) => t.error(err))
+    fastify.mqtt.subscribe(testTopic, {}, (err) => t.error(err))
     fastify.mqtt.publish(testTopic, testString, {}, (err) => t.error(err))
   })
 })
@@ -103,6 +103,6 @@ test('double register', t => {
     .register(fastifyMqtt, { host: TEST_BROKER_URL_UNAUTHENTICATED })
     .ready(err => {
       t.ok(err)
-      t.equal(err.message, 'fastify-mqtt has already registered')
+      t.equal(err.message, 'fastifyMqtt has already registered')
     })
 })
