@@ -1,0 +1,37 @@
+{
+  "name": "fastify_mqtt",
+  "version": "1.0.0",
+  "description": "Fastify MQTT.js plugin",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+     "build": "tsc index.ts",
+    "coverage": "pnpm run test -- --cov --coverage-report=html",
+    "test": "pnpm run build && tap test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kvjoshi/fastifyMqtt.git"
+  },
+  "keywords": [
+    "fastify",
+    "mqtt",
+    "plugin",
+    "fastify-plugin"
+  ],
+  "author": "Karmavir Joshi <karmavir@auranics.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kvjoshi/fastifyMqtt/issues"
+  },
+  "homepage": "https://github.com/kvjoshi/fastifyMqtt#readme",
+  "devDependencies": {
+    "fastify": "^4.28.1",
+        "standard": "^16.0.0",
+    "tap": "^15.0.0"
+  },
+  "dependencies": {
+    "fastify-plugin": "^4.5.1",
+    "mqtt": "^5.10.0"
+  }
+}
